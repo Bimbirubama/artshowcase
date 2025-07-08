@@ -42,32 +42,7 @@ class CommentController extends Controller
         return view('comments.show', compact('comment'));
     }
 
-    /**
-     * Menampilkan form edit komentar.
-     */
-    public function edit(Comment $comment)
-    {
-        return view('comments.edit', compact('comment'));
-    }
-
-    /**
-     * Memperbarui data komentar.
-     */
-    public function update(Request $request, Comment $comment)
-    {
-        $validated = $request->validate([
-            'name'    => 'required|string|max:255',
-            'comment' => 'required|string',
-        ]);
-
-        $comment->update($validated);
-
-        return redirect()->route('comments.index')->with('success', 'Komentar berhasil diperbarui.');
-    }
-
-    /**
-     * Menghapus komentar.
-     */
+ 
     public function destroy(Comment $comment)
     {
         $comment->delete();

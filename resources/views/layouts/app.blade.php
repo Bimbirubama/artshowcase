@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ArtShowcase - @yield('title')</title>
+    <!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
@@ -101,17 +106,19 @@
 
         {{-- Sidebar Bawah (User Info & Logout) --}}
         @auth
-        <div class="border-top pt-3 px-3 text-light small">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <i class="bi bi-person-circle me-1"></i> {{ Auth::user()->name }}
+            <div class="border-top pt-3 px-3 text-light small">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <i class="bi bi-person-circle me-1"></i> {{ Auth::user()->name }}
+                    </div>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-inline">
+                        @csrf
+                        <button type="button" class="btn btn-link text-light" onclick="confirmLogout()">
+                            <i class="bi bi-box-arrow-right me-2"></i> 
+                        </button>
+                    </form>
                 </div>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="m-0">
-                    @csrf
-                    <button type="button" class="btn btn-sm btn-outline-light ms-2" onclick="confirmLogout()">Logout</button>
-                </form>
             </div>
-        </div>
         @endauth
     </div>
 

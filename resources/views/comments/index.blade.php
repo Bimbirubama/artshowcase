@@ -43,10 +43,6 @@
                         </td>
                         <td>{{ $comment->created_at->format('d M Y H:i') }}</td>
                         <td>
-                            <a href="{{ route('comments.edit', $comment->id) }}" class="btn btn-sm btn-warning me-1">
-                                <i class="bi bi-pencil-square"></i> Edit
-                            </a>
-
                             <form action="{{ route('comments.destroy', $comment->id) }}" method="POST" class="d-inline"
                                   onsubmit="return confirm('Yakin ingin menghapus komentar ini?')">
                                 @csrf
