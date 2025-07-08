@@ -79,44 +79,48 @@
 </head>
 
 <body>
-    <div class="sidebar">
-        <h4 class="text-center">ArtShowcase</h4>
-        <hr class="bg-light">
+    <div class="sidebar d-flex flex-column justify-content-between">
+        {{-- Sidebar Atas --}}
+        <div>
+            <h4 class="text-center">🎨 ArtShowcase</h4>
+            <hr class="bg-light">
 
-        {{-- Tampilkan untuk semua (termasuk guest) --}}
+            {{-- Tautan Navigasi --}}
+            @auth
+                <a href="{{ route('dashboard') }}"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+                <a href="{{ route('artworks.index') }}"><i class="bi bi-images me-2"></i>Galeri</a>
+                <a href="{{ route('categories.index') }}"><i class="bi bi-tags me-2"></i>Kategori</a>
+                <a href="{{ route('creators.index') }}"><i class="bi bi-person-badge me-2"></i>Kreator</a>
+                <a href="{{ route('comments.index') }}"><i class="bi bi-chat-left-text me-2"></i>Ulasan</a>
+            @else
+                <a href="{{ route('dashboard.public') }}"><i class="bi bi-grid me-2"></i>Dashboard</a>
+                <a href="{{ route('galery') }}"><i class="bi bi-images me-2"></i>Galeri</a>
+                <a href="{{ route('login') }}"><i class="bi bi-box-arrow-in-right me-2"></i>Masuk</a>
+            @endauth
+        </div>
 
+        {{-- Sidebar Bawah (User Info & Logout) --}}
         @auth
-            {{-- Tampilkan hanya jika sudah login --}}
-            <a href="{{ route('dashboard') }}">Dashboard</a>
-            <a href="{{ route('artworks.index') }}">Galeri</a>
-            <a href="{{ route('categories.index') }}">Kategori</a>
-            <a href="{{ route('creators.index') }}">Kreator</a>
-            <a href="{{ route('comments.index') }}">Ulasan</a>
-
-            <div class="px-3 text-light small mt-3">
-                <i class="bi bi-person-circle"></i> {{ Auth::user()->name }}
+        <div class="border-top pt-3 px-3 text-light small">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <i class="bi bi-person-circle me-1"></i> {{ Auth::user()->name }}
+                </div>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="m-0">
+                    @csrf
+                    <button type="button" class="btn btn-sm btn-outline-light ms-2" onclick="confirmLogout()">Logout</button>
+                </form>
             </div>
-            {{-- <form action="{{ route('logout') }}" method="POST">
-            @csrf
-            <button type="submit" class="btn btn-link">Logout</button>
-        </form> --}}
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-inline">
-                @csrf
-                <button type="button" class="btn btn-link text-light" onclick="confirmLogout()">Logout</button>
-            </form>
-        @else
-            {{-- Tampilkan jika belum login --}}
-            <a href="{{ route('dashboard.public') }}">Galeri</a>
-            <a href="{{ route('login') }}">Masuk</a>
-
+        </div>
         @endauth
     </div>
-
 
     {{-- Main Content --}}
     <div class="main-content">
         @yield('content')
     </div>
+
+    {{-- Script Logout --}}
     <script>
         function confirmLogout() {
             if (confirm("Apakah Anda yakin ingin logout?")) {
@@ -125,7 +129,9 @@
         }
     </script>
 
+    {{-- Bootstrap --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 
 </html>

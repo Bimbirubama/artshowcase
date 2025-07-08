@@ -136,4 +136,8 @@ class ArtworkController extends Controller
     return view('dashboard', compact('artworks'));
 }
 
+public function galery(){
+     $artworks = Artwork::with(['creator', 'category'])->latest()->get();
+    return view('galery', compact('artworks'));
+}
 }

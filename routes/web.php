@@ -32,6 +32,8 @@ Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admi
 Route::get('/', [ArtworkController::class, 'publicIndex'])->name('dashboard.public');
 
 
+Route::get('/galery', [ArtworkController::class, 'galery'])->name('galery');
+
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', function () {
         return view('admin.dashboard');

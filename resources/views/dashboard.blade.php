@@ -29,10 +29,10 @@
                     </a>
                 </div>
                 <div class="col-md-6 text-center mt-4 mt-md-0">
-                    <img src="https://cdn.pixabay.com/photo/2016/11/29/06/15/art-1868562_960_720.jpg"
-                        alt="Studio Seni Lukis" class="img-fluid rounded shadow-sm" style="max-width: 320px; height: auto;">
-
+                    <img src="{{ asset('images/st.webp') }}" alt="Studio Seni Lukis" class="img-fluid rounded shadow-sm"
+                        style="max-width: 320px; height: auto;">
                 </div>
+
             </div>
         </div>
     </section>
