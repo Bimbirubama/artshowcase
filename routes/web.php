@@ -22,21 +22,31 @@ Route::post('/comments', [CommentController::class, 'store'])->name('comments.st
 Route::resource('creators', CreatorController::class);
 Route::resource('comments', CommentController::class)->only(['index', 'edit', 'update', 'destroy']);
 // Tampilkan form login
-Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
+Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('login');
 
-// Proses login
-Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login.submit');
+// ✅ Proses login
+Route::post('/login', [AdminAuthController::class, 'login'])->name('login.submit');
 
-// Logout admin
+Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
 Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
+Route::get('/', [ArtworkController::class, 'publicIndex'])->name('dashboard.public');
 
-Route::prefix('admin')->middleware('admin')->group(function () {
-    Route::get('/dashboard', function() {
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
-
-    // Tambahkan route admin lainnya di sini...
 });
+
+
+
+// Route::prefix('admin')->middleware('admin')->group(function () {
+//     Route::get('/dashboard', function() {
+//         return view('admin.dashboard');
+//     })->name('admin.dashboard');
+
+//     // Tambahkan route admin lainnya di sini...
+// });
 
 
 

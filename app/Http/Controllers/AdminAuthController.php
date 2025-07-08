@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 class AdminAuthController extends Controller
 {
     public function showLoginForm() {
-        return view('admin.login'); // nanti buat view ini
+        return view('login'); // nanti buat view ini
     }
 
     public function login(Request $request) {
@@ -23,7 +23,7 @@ class AdminAuthController extends Controller
             $request->session()->regenerate();
 
             // Redirect ke dashboard admin
-            return redirect()->intended('/admin/dashboard');
+            return redirect()->intended('/dashboard');
         }
 
         return back()->withErrors([
@@ -35,6 +35,6 @@ class AdminAuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/admin/login');
+        return redirect('/login');
     }
 }

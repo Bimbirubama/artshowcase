@@ -13,10 +13,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-       $this->call([
-        CategorySeeder::class,
-        CreatorSeeder::class,
-        ArtworkSeeder::class, // jalankan artwork terakhir agar relasi tidak error
-    ]);
+    // //    $this->call([
+    // //     CategorySeeder::class,
+    // //     CreatorSeeder::class,
+    // //     ArtworkSeeder::class, // jalankan artwork terakhir agar relasi tidak error
+    // ])
+    $this->call(AdminSeeder::class);
     }
 }

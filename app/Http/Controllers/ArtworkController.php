@@ -123,5 +123,17 @@ class ArtworkController extends Controller
 
         return redirect()->route('artworks.index')->with('success', 'Artwork berhasil dihapus.');
     }
+    public function publicIndex(Request $request)
+{
+   $query = Artwork::with(['creator', 'category'])->latest();
+
+    if ($request->has('search') && $request->search !== '') {
+        $query->where('title', 'like', '%' . $request->search . '%');
+    }
+
+    $artworks = $query->get();
+
+    return view('dashboard', compact('artworks'));
+}
 
 }
