@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role', 
     ];
 
     /**
@@ -46,8 +47,8 @@ class User extends Authenticatable
         ];
     }
     protected $routeMiddleware = [
-    // middleware lain ...
-    'admin' => \App\Http\Middleware\AdminMiddleware::class,
+    // // middleware lain ...
+    // 'admin' => \App\Http\Middleware\AdminMiddleware::class,
 ];
 
 }

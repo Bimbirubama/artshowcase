@@ -14,11 +14,23 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
-            'name' => 'Admin Bimbi',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('123456'), // ubah sesuai kebutuhan
-        ]);
+        User::firstOrCreate(
+            ['email' => 'admin@gmail.com'],
+            [
+                'name' => 'Admin Bimbi',
+                'password' => Hash::make('123456'), // ubah sesuai kebutuhan
+            ]
+        );
+
+        User::firstOrCreate(
+            ['email' => 'user@gmail.com'],
+            [
+                'name' => 'User Biasa',
+                'password' => Hash::make('password'),
+                'role' => 'user',
+            ]
+        );
     }
+
     
 }

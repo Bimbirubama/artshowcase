@@ -12,9 +12,13 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description')->nullable();
+            $table->string('image')->nullable(); // Tambahkan kolom image
+            $table->foreignId('creator_id')
+                  ->constrained('bimbi_creators')
+                  ->onDelete('cascade'); // Tambahkan relasi ke creators
             $table->foreignId('category_id')
                   ->constrained('bimbi_categories')
-                  ->onDelete('cascade'); // jika kategori dihapus, karya juga dihapus
+                  ->onDelete('cascade');
             $table->timestamps();
         });
     }
