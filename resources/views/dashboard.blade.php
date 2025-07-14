@@ -43,32 +43,21 @@
         animation: fadeInUp 0.6s ease forwards;
     }
 
-    /* Delay animasi tiap kartu dengan nth-child */
-    .dashboard-card:nth-child(1) {
-        animation-delay: 0.2s;
-    }
-    .dashboard-card:nth-child(2) {
-        animation-delay: 0.4s;
-    }
-    .dashboard-card:nth-child(3) {
-        animation-delay: 0.6s;
-    }
-    .dashboard-card:nth-child(4) {
-        animation-delay: 0.8s;
-    }
+    .dashboard-card:nth-child(1) { animation-delay: 0.2s; }
+    .dashboard-card:nth-child(2) { animation-delay: 0.4s; }
+    .dashboard-card:nth-child(3) { animation-delay: 0.6s; }
+    .dashboard-card:nth-child(4) { animation-delay: 0.8s; }
 
     .card-body h5 {
         font-size: 1.2rem;
         color: #222;
     }
 
-    /* Navbar gelap */
     nav.navbar {
         background-color: rgba(34, 34, 34, 0.95) !important;
         backdrop-filter: blur(6px);
     }
 
-    /* Header pencarian gelap + animasi */
     .card-header-gallery {
         background-color: rgba(34, 34, 34, 0.95) !important;
         border-radius: 12px;
@@ -78,7 +67,6 @@
         animation: fadeInUp 0.8s ease forwards;
     }
 
-    /* Styling form pencarian di header */
     .card-header-gallery .form-control {
         background-color: #555;
         color: #eee;
@@ -114,7 +102,6 @@
         color: #444 !important;
     }
 
-    /* Animasi keyframes */
     @keyframes fadeInUp {
         to {
             opacity: 1;
@@ -123,7 +110,8 @@
     }
 </style>
 
-{{-- Header Card dengan pencarian gelap --}}
+{{-- Bagian Header Pencarian --}}
+@auth
 <div class="card shadow-sm border-0 mb-4 card-header-gallery">
     <div class="card-body">
         <div class="row align-items-center">
@@ -134,7 +122,7 @@
             <div class="col-md-6 d-flex justify-content-end">
                 <form action="{{ route('artworks.index') }}" method="GET" class="d-flex" role="search">
                     <input type="text" name="search" class="form-control form-control-sm me-2"
-                           placeholder="Cari karya..." value="{{ request('search') }}">
+                        placeholder="Cari karya..." value="{{ request('search') }}">
                     <button type="submit" class="btn btn-light btn-sm">
                         <i class="bi bi-search"></i>
                     </button>
@@ -143,64 +131,74 @@
         </div>
     </div>
 </div>
+@endauth
 
-{{-- Hero Section --}}
+{{-- Hero Section Umum --}}
 <section class="py-5">
     <div class="container text-center overlay-bg">
-        <img src="{{ asset('images/d.jpg') }}" alt="Studio Seni Lukis"
+        <img src="{{ asset('images/d.jpg') }}" alt="Galeri"
             class="img-fluid rounded shadow-sm mb-3"
-            style="width: 100%; max-height: 240px; object-fit: cover;">
+            style="width: 100%; max-height: 340px; object-fit: cover;">
 
         <h1 class="fw-bold text-dark mb-2" style="font-size: 1.25rem;">
             Selamat Datang di <span class="text-primary">Galeri Seni Digital</span>
         </h1>
+
+        @guest
+        <p class="text-muted mb-3" style="font-size: 0.9rem;">
+            Silakan login untuk mengakses dan mengelola karya seni digital, kategori, kreator, dan komentar pengguna.
+        </p>
+        <a href="{{ route('login') }}" class="btn btn-sm btn-primary rounded-pill px-3">
+            Login Sekarang
+        </a>
+        @endguest
+
+        @auth
         <p class="text-muted mb-3" style="font-size: 0.9rem;">
             Kelola karya seni digital, kategori, kreator, dan komentar pengguna dalam satu platform.
         </p>
-
-        {{-- <a href="{{ route('artworks.show') }}" class="btn btn-sm btn-primary rounded-pill px-3">
-            Temukan Berbagai Karya Baru
-        </a> --}}
+        @endauth
     </div>
 </section>
 
-{{-- Main Content --}}
+{{-- Dashboard Card Hanya untuk User Login --}}
+@auth
+@php
+    $cards = [
+        [
+            'icon' => 'fa-palette',
+            'color' => 'primary',
+            'title' => 'Artworks',
+            'text' => 'Kelola semua karya seni.',
+            'route' => 'galery',
+        ],
+        [
+            'icon' => 'fa-tags',
+            'color' => 'success',
+            'title' => 'Categories',
+            'text' => 'Kelola kategori karya seni.',
+            'route' => 'categories.index',
+        ],
+        [
+            'icon' => 'fa-user-pen',
+            'color' => 'warning',
+            'title' => 'Creators',
+            'text' => 'Kelola kreator karya seni.',
+            'route' => 'creators.index',
+        ],
+        [
+            'icon' => 'fa-comments',
+            'color' => 'secondary',
+            'title' => 'Comments',
+            'text' => 'Kelola komentar pengguna.',
+            'route' => 'comments.index',
+        ],
+    ];
+@endphp
+
 <section class="pb-5">
     <div class="container overlay-bg mt-4">
         <div class="row g-4 justify-content-center">
-            @php
-                $cards = [
-                    [
-                        'icon' => 'fa-palette',
-                        'color' => 'primary',
-                        'title' => 'Artworks',
-                        'text' => 'Kelola semua karya seni.',
-                        'route' => 'artworks.index',
-                    ],
-                    [
-                        'icon' => 'fa-tags',
-                        'color' => 'success',
-                        'title' => 'Categories',
-                        'text' => 'Kelola kategori karya seni.',
-                        'route' => 'categories.index',
-                    ],
-                    [
-                        'icon' => 'fa-user-pen',
-                        'color' => 'warning',
-                        'title' => 'Creators',
-                        'text' => 'Kelola kreator karya seni.',
-                        'route' => 'creators.index',
-                    ],
-                    [
-                        'icon' => 'fa-comments',
-                        'color' => 'secondary',
-                        'title' => 'Comments',
-                        'text' => 'Kelola komentar pengguna.',
-                        'route' => 'comments.index',
-                    ],
-                ];
-            @endphp
-
             @foreach ($cards as $card)
                 <div class="col-12 col-sm-6 col-lg-3">
                     <a href="{{ route($card['route']) }}" class="text-decoration-none">
@@ -218,5 +216,6 @@
         </div>
     </div>
 </section>
+@endauth
 
 @endsection

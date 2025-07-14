@@ -93,7 +93,9 @@
         {{-- Judul dan tombol tambah --}}
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h2 class="text-primary mb-0">📂 Daftar Kategori</h2>
-            <a href="{{ route('categories.create') }}" class="btn btn-success">+ Tambah Kategori</a>
+            @if(auth()->check() && auth()->user()->role === 'admin')
+                <a href="{{ route('categories.create') }}" class="btn btn-success">+ Tambah Kategori</a>
+            @endif
         </div>
 
         {{-- Tabel kategori --}}
@@ -103,7 +105,9 @@
                     <tr>
                         <th style="width:5%;">No</th>
                         <th>Nama Kategori</th>
-                        <th style="width: 15%;" class="text-end">Aksi</th>
+                        @if(auth()->check() && auth()->user()->role === 'admin')
+                            <th style="width: 15%;" class="text-end">Aksi</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -111,21 +115,20 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $category->name }}</td>
-                            <td class="text-end">
-                             @if(auth()->check() && auth()->user()->role === 'admin')
-
-                                <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-sm btn-warning me-2">Edit</a>
-                                <form action="{{ route('categories.destroy', $category->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus kategori ini?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-sm btn-danger">Hapus</button>
-                                </form>
-                                @endif
-                            </td>
+                            @if(auth()->check() && auth()->user()->role === 'admin')
+                                <td class="text-end">
+                                    <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-sm btn-warning me-2">Edit</a>
+                                    <form action="{{ route('categories.destroy', $category->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus kategori ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-sm btn-danger">Hapus</button>
+                                    </form>
+                                </td>
+                            @endif
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="3" class="text-center text-muted">Belum ada kategori ditambahkan.</td>
+                            <td colspan="{{ auth()->check() && auth()->user()->role === 'admin' ? 3 : 2 }}" class="text-center text-muted">Belum ada kategori ditambahkan.</td>
                         </tr>
                     @endforelse
                 </tbody>

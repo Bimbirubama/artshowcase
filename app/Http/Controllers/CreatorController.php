@@ -63,7 +63,7 @@ class CreatorController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:creators,email,' . $creator->id,
+            'email' => 'required|email|unique:bimbi_creators,email,' . $creator->id,
             'bio' => 'nullable|string',
         ]);
 

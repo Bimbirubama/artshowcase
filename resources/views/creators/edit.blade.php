@@ -58,9 +58,10 @@
             <div class="edit-card">
 
                 <h4 class="card-title mb-4 text-center">
-                    <i class="bi bi-pencil-square text-primary me-2"></i>Edit Data Kreator
+                    <i class="bi bi-pencil-square text-primary me-2"></i> Edit Data Kreator
                 </h4>
 
+                {{-- Tampilkan error validasi jika ada --}}
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul class="mb-0">
@@ -75,26 +76,60 @@
                     @csrf
                     @method('PUT')
 
+                    {{-- Nama --}}
                     <div class="mb-3">
-                        <label class="form-label">Nama</label>
-                        <input type="text" name="name" class="form-control" value="{{ old('name', $creator->name) }}" required>
+                        <label for="name" class="form-label">Nama</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            class="form-control @error('name') is-invalid @enderror"
+                            value="{{ old('name', $creator->name) }}"
+                            required
+                        >
+                        @error('name')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
+                    {{-- Email --}}
                     <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control" value="{{ old('email', $creator->email) }}" required>
+                        <label for="email" class="form-label">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            class="form-control @error('email') is-invalid @enderror"
+                            value="{{ old('email', $creator->email) }}"
+                            required
+                        >
+                        @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
+                    {{-- Biografi --}}
                     <div class="mb-3">
-                        <label class="form-label">Biografi</label>
-                        <textarea name="bio" class="form-control" rows="4" placeholder="Ceritakan tentang kreator...">{{ old('bio', $creator->bio) }}</textarea>
+                        <label for="bio" class="form-label">Biografi</label>
+                        <textarea
+                            id="bio"
+                            name="bio"
+                            class="form-control @error('bio') is-invalid @enderror"
+                            rows="4"
+                            placeholder="Ceritakan tentang kreator..."
+                        >{{ old('bio', $creator->bio) }}</textarea>
+                        @error('bio')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
+                    {{-- Tombol Simpan --}}
                     <button type="submit" class="btn btn-primary w-100 fw-semibold">
                         <i class="bi bi-save me-1"></i> Simpan Perubahan
                     </button>
                 </form>
 
+                {{-- Tombol Kembali --}}
                 <a href="{{ route('creators.index') }}" class="btn btn-outline-secondary w-100 btn-back">
                     <i class="bi bi-arrow-left-circle me-1"></i> Kembali ke Daftar Kreator
                 </a>

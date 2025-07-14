@@ -14,6 +14,6 @@ class Admin
             return $next($request);
         }
 
-        abort(403, 'Akses ditolak. Hanya admin yang bisa mengakses halaman ini.');
+        // abort(403, 'Akses ditolak. Hanya admin yang bisa mengakses halaman ini.');
     }
 }

@@ -147,26 +147,27 @@
         <div class="col-md-4 mb-4 animate-fade-up">
             <div class="card card-gallery h-100 position-relative">
 
-                {{-- Dropdown ⋮ --}}
-                <div class="dropdown position-absolute top-0 end-0 m-2">
-                    <button class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-three-dots-vertical"></i>
-                    </button>
-                    @if(auth()->check() && auth()->user()->role === 'admin')
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li>
-                            <a class="dropdown-item text-warning" href="{{ route('artworks.edit', $artwork->id) }}">✏️ Edit</a>
-                        </li>
-                        <li>
-                            <form action="{{ route('artworks.destroy', $artwork->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus karya ini?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="dropdown-item text-danger">🗑️ Hapus</button>
-                            </form>
-                        </li>
-                    </ul>
-                    @endif
-                </div>
+              {{-- Dropdown ⋮ (Hanya muncul jika sudah login dan admin) --}}
+@if(auth()->check() && auth()->user()->role === 'admin')
+<div class="dropdown position-absolute top-0 end-0 m-2">
+    <button class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi bi-three-dots-vertical"></i>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end">
+        <li>
+            <a class="dropdown-item text-warning" href="{{ route('artworks.edit', $artwork->id) }}">✏️ Edit</a>
+        </li>
+        <li>
+            <form action="{{ route('artworks.destroy', $artwork->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus karya ini?')">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="dropdown-item text-danger">🗑️ Hapus</button>
+            </form>
+        </li>
+    </ul>
+</div>
+@endif
+
 
                 {{-- Gambar --}}
                 @if($artwork->image)

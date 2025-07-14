@@ -74,7 +74,9 @@
     <div class="card card-creators">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="text-primary mb-0">🧑‍🎨 Daftar Kreator</h2>
-            <a href="{{ route('creators.create') }}" class="btn btn-success">+ Tambah Kreator</a>
+            @if(auth()->check() && auth()->user()->role === 'admin')
+                <a href="{{ route('creators.create') }}" class="btn btn-success">+ Tambah Kreator</a>
+            @endif
         </div>
 
         <div class="table-responsive">
@@ -85,7 +87,9 @@
                         <th>Nama</th>
                         <th>Email</th>
                         <th>Bio</th>
-                        <th style="width: 15%;" class="text-end">Aksi</th>
+                        @if(auth()->check() && auth()->user()->role === 'admin')
+                            <th style="width: 15%;" class="text-end">Aksi</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -95,21 +99,22 @@
                             <td>{{ $creator->name }}</td>
                             <td>{{ $creator->email }}</td>
                             <td>{{ $creator->bio ?? '-' }}</td>
-                            <td class="text-end">
-                             @if(auth()->check() && auth()->user()->role === 'admin')
-
-                                <a href="{{ route('creators.edit', $creator->id) }}" class="btn btn-sm btn-warning me-1">Edit</a>
-                                <form action="{{ route('creators.destroy', $creator->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus kreator ini?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-sm btn-danger">Hapus</button>
-                                </form>
-                                @endif
-                            </td>
+                            @if(auth()->check() && auth()->user()->role === 'admin')
+                                <td class="text-end">
+                                    <a href="{{ route('creators.edit', $creator->id) }}" class="btn btn-sm btn-warning me-1">Edit</a>
+                                    <form action="{{ route('creators.destroy', $creator->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus kreator ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-sm btn-danger">Hapus</button>
+                                    </form>
+                                </td>
+                            @endif
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="text-center text-muted">Belum ada kreator terdaftar.</td>
+                            <td colspan="{{ auth()->check() && auth()->user()->role === 'admin' ? 5 : 4 }}" class="text-center text-muted">
+                                Belum ada kreator terdaftar.
+                            </td>
                         </tr>
                     @endforelse
                 </tbody>

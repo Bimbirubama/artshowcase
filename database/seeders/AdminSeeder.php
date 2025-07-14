@@ -18,7 +18,7 @@ class AdminSeeder extends Seeder
             ['email' => 'admin@gmail.com'],
             [
                 'name' => 'Admin Bimbi',
-                'password' => Hash::make('123456'), // ubah sesuai kebutuhan
+                'password' => Hash::make('123456'), 
             ]
         );
 
